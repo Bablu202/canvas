@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 enum DrawingTool {
   Pencil = "pencil",
   Rectangle = "rectangle",
+  Circle = "circle",
 }
 
 const CanvasComponent: React.FC = () => {
@@ -12,12 +13,15 @@ const CanvasComponent: React.FC = () => {
   const [drawingTool, setDrawingTool] = useState<DrawingTool>(
     DrawingTool.Pencil
   );
-  const [brushColor, setBrushColor] = useState<string>("#000000"); // default brush color
-  const [brushSize, setBrushSize] = useState<number>(2); // default brush size
+  const [brushColor, setBrushColor] = useState<string>("#000000");
+  const [brushSize, setBrushSize] = useState<number>(2);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
     null
   );
-  const [fillColor, setFillColor] = useState<string>("#ffffff"); // default fill color for rectangles
+  const [endPoint, setEndPoint] = useState<{ x: number; y: number } | null>(
+    null
+  );
+  const [fillColor, setFillColor] = useState<string>("#ffffff");
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,21 +60,32 @@ const CanvasComponent: React.FC = () => {
           ctx.lineTo(offsetX, offsetY);
           ctx.stroke();
         } else if (drawingTool === DrawingTool.Rectangle) {
-          const { x, y } = startPoint as { x: number; y: number };
-          const width = offsetX - x;
-          const height = offsetY - y;
-          ctx.fillStyle = fillColor;
-          ctx.fillRect(x, y, width, height);
-          ctx.strokeStyle = brushColor;
-          ctx.strokeRect(x, y, width, height);
+          setEndPoint({ x: offsetX, y: offsetY });
         }
       }
     }
   };
 
   const endDrawing = () => {
+    if (drawingTool === DrawingTool.Rectangle && startPoint && endPoint) {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          const { x: startX, y: startY } = startPoint;
+          const { x: endX, y: endY } = endPoint;
+          const width = endX - startX;
+          const height = endY - startY;
+          ctx.fillStyle = fillColor;
+          ctx.fillRect(startX, startY, width, height);
+          ctx.strokeStyle = brushColor;
+          ctx.strokeRect(startX, startY, width, height);
+        }
+      }
+    }
     setIsDrawing(false);
     setStartPoint(null);
+    setEndPoint(null);
   };
 
   const clearCanvas = () => {
@@ -122,8 +137,8 @@ const CanvasComponent: React.FC = () => {
         onMouseMove={draw}
         onMouseUp={endDrawing}
         onMouseOut={endDrawing}
-        width={800} // set your canvas width
-        height={600} // set your canvas height
+        width={800}
+        height={600}
         style={{ border: "1px solid #000" }}
       />
       <style jsx>{`
@@ -143,3 +158,6 @@ const CanvasComponent: React.FC = () => {
 };
 
 export default CanvasComponent;
+
+//Addons
+//ctx.globalAlpha = 0.5; useState ,input range 0.2 - 0.9

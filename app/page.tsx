@@ -1,10 +1,10 @@
-import CanvasComponent from "@/components/DrawInCanvas";
+import CanvasComponentTwo from "@/components/Testing";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <CanvasComponent />
+      <CanvasComponentTwo />
     </div>
   );
 };

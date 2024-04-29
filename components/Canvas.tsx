@@ -140,7 +140,15 @@ const CanvasComponentTwo = () => {
     };
     reader.readAsDataURL(file);
   };
-
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  };
   return (
     <div>
       <div className="toolbar">
@@ -171,7 +179,16 @@ const CanvasComponentTwo = () => {
           onChange={handleTextChange}
           placeholder="Enter text"
         />
+        <button onClick={clearCanvas}>Clear</button>
+
         <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <input
+          type="range"
+          min="1"
+          max="20"
+          value={strokeWidth}
+          onChange={(e) => setStrokeWidth(parseInt(e.target.value))}
+        />
       </div>
       <canvas
         ref={canvasRef}
