@@ -14,7 +14,7 @@ interface Shape {
   fill?: string;
 }
 
-const CanvasComponent = () => {
+const CanvasComponentTwo = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [tool, setTool] = useState<"pencil" | "line" | "rectangle" | "circle">(
@@ -26,7 +26,8 @@ const CanvasComponent = () => {
   const [text, setText] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
-  const [startPoint, setStartPoint] = useState<Point>();
+  const [startPoint, setStartPoint] = useState<Point>({ x: 0, y: 0 });
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -213,4 +214,4 @@ const CanvasComponent = () => {
   );
 };
 
-export default CanvasComponent;
+export default CanvasComponentTwo;
