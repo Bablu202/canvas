@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.range::-webkit-slider-thumb {
+  background: #00fd0a;
+}
