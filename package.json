@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
     "next": "14.2.2",
+    "rc-slider": "^10.6.2",
     "react": "^18",
     "react-color": "^2.19.3",
     "react-dom": "^18"

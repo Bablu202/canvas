@@ -1,28 +1,42 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
-import SliderStyles from "./SliderStyles";
+import React, { useRef, useState } from "react";
 
-const Slider: React.FC = () => {
-  const [value, setValue] = useState<number>(50);
+interface Options {
+  padding: number;
+}
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(parseInt(e.target.value));
+const TestComponent: React.FC = () => {
+  const [options, setOptions] = useState<Options>({ padding: 4 }); // Initial padding value
+  const wordRef = useRef<HTMLSpanElement>(null);
+
+  const handlePaddingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPadding = parseInt(event.target.value);
+    setOptions({ ...options, padding: newPadding });
+    if (wordRef.current) {
+      wordRef.current.style.padding = `${newPadding}px`;
+    }
   };
 
   return (
-    <div className="w-64 mx-auto mt-8 relative">
-      <SliderStyles value={value} />
-      <input type="range" value={value} onChange={handleChange} />
-
-      <div className="flex justify-between mt-2">
-        <span className="text-sm text-gray-500">0</span>
-        <span className="text-sm text-gray-500">100</span>
-      </div>
-      <div className="mt-4">
-        <span className="text-lg text-gray-700">{value}</span>
-      </div>
+    <div className="flex items-center justify-center h-screen">
+      <span
+        ref={wordRef}
+        style={{ padding: `${options.padding}px` }}
+        className="border border-blue-500 p-2"
+      >
+        Word
+      </span>
+      <input
+        type="range"
+        min="0"
+        max="20"
+        value={options.padding}
+        onChange={handlePaddingChange}
+        className="ml-4"
+      />
+      <span className="ml-2">{options.padding}px</span>
     </div>
   );
 };
 
-export default Slider;
+export default TestComponent;

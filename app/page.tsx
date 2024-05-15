@@ -1,12 +1,10 @@
-import ModernSlider from "@/components/TestComponent";
-import CanvasComponentTwo from "@/components/Testing";
-import React from "react";
+import TestComponent from "@/components/TestComponent";
 
 const page = () => {
   return (
     <div>
       {/* <CanvasComponentTwo /> */}
-      <ModernSlider />
+      <TestComponent />
     </div>
   );
 };

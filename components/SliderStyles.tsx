@@ -41,3 +41,5 @@ const SliderStyles: React.FC<SliderStylesProps> = ({ value }) => {
 };
 
 export default SliderStyles;
+/*  <SliderStyles value={value} />
+      <input type="range" value={value} onChange={handleChange} />*/
