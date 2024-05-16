@@ -7,20 +7,15 @@ interface Options {
 
 const TestComponent: React.FC = () => {
   const [options, setOptions] = useState<Options>({ padding: 4 }); // Initial padding value
-  const wordRef = useRef<HTMLSpanElement>(null);
 
   const handlePaddingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPadding = parseInt(event.target.value);
     setOptions({ ...options, padding: newPadding });
-    if (wordRef.current) {
-      wordRef.current.style.padding = `${newPadding}px`;
-    }
   };
 
   return (
     <div className="flex items-center justify-center h-screen">
       <span
-        ref={wordRef}
         style={{ padding: `${options.padding}px` }}
         className="border border-blue-500 p-2"
       >
